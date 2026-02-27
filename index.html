@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Signup</title>
+    <style>
+        /* تصاميم لجعل النموذج متجاوب */
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 20px; background-color: #f4f4f4; }
+        .newsletter-form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .newsletter-form h2 { margin-top: 0; color: #333; }
+        .form-group { display: flex; flex-direction: column; gap: 10px; }
+        input[type="email"] { padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 100%; box-sizing: border-box; }
+        button { padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #218838; }
+        .message { margin-top: 10px; font-size: 14px; min-height: 1.2em; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+
+<div class="newsletter-form">
+    <h2>اشترك في نشرتنا</h2>
+    <form id="signupForm">
+        <div class="form-group">
+            <input type="email" id="email" placeholder="أدخل بريدك الإلكتروني" required>
+            <button type="submit">اشتراك</button>
+        </div>
+        <p id="message" class="message"></p>
+    </form>
+</div>
+
+<script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+        // منع الصفحة من التحميل (Refresh) عند الضغط على الزر
+        e.preventDefault();
+
+        const emailInput = document.getElementById('email');
+        const messageDisplay = document.getElementById('message');
+        const emailValue = emailInput.value.trim();
+
+        // Regex للتحقق من صحة الإيميل برمجياً
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // بداية عملية التحقق (Simple Validation)
+        if (emailValue === "") {
+            messageDisplay.textContent = "عذراً، لا يمكن ترك الحقل فارغاً.";
+            messageDisplay.className = "message error";
+            emailInput.style.borderColor = "red";
+        } 
+        else if (!emailPattern.test(emailValue)) {
+            messageDisplay.textContent = "يرجى إدخال بريد إلكتروني بصيغة صحيحة (مثال: name@mail.com).";
+            messageDisplay.className = "message error";
+            emailInput.style.borderColor = "red";
+        } 
+        else {
+            // في حالة النجاح
+            messageDisplay.textContent = "تم التسجيل بنجاح! شكراً لك.";
+            messageDisplay.className = "message success";
+            emailInput.style.borderColor = "#28a745";
+            emailInput.value = ""; // مسح الخانة بعد النجاح
+        }
+    });
+</script> 
